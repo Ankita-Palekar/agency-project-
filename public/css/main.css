@@ -1,0 +1,26 @@
+.body-container{
+  margin-top:50px;
+}
+
+.movie-header{
+  margin-top: 3px;
+  text-transform: capitalize;
+}
+
+.list-movies > .row{
+  margin-top: 20px;
+}
+
+.movie-container{
+  margin-bottom: 20px;
+  /*height: 200px;*/
+}
+
+h3 > a{
+  text-decoration: none;
+}
+
+.div-container > img{
+  width: 100%;
+  max-width: 300px;
+}

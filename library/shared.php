@@ -4,8 +4,8 @@
 
 function setReporting() {
   if (DEVELOPMENT_ENVIRONMENT == true) {
-  	error_reporting(E_ALL);
-  	ini_set('display_errors','On');
+    // error_reporting(E_ALL);
+  	// ini_set('display_errors','On');
   } else {
   	error_reporting(E_ALL);
   	ini_set('display_errors','Off');
@@ -50,7 +50,7 @@ function callHook() {
 	global $url;
 
 	$urlArray = array();
-	$urlArray = explode("/",$url);
+	$urlArray = explode("/", $url);
 
 	$controller = $urlArray[0];
 	array_shift($urlArray);
@@ -62,12 +62,23 @@ function callHook() {
 	$controller = ucwords($controller);
 	$model = rtrim($controller, 's');
 	$controller .= 'Controller';
-	$dispatch = new $controller($model, $controllerName, $action);
-
+  
+  $custom = '';
+  if (sizeof($urlArray) > 1) {
+    $custom = $urlArray[0];
+  }  
+  
+  $dispatch = new $controller($model, $controllerName, $action, $custom);
+  
 	if ((int)method_exists($controller, $action)) {
     // array($dispatch, $action) => array of class name and method to be called 
     // $queryString => array of arguments to be called
-    call_user_func_array(array($dispatch, $action), $queryString);
+    if (sizeof($_POST) > 0) { 
+      call_user_func_array(array($dispatch, $action), array($_POST));
+    } else { 
+      call_user_func_array(array($dispatch, $action), array($queryString));
+    }
+    
 	} else {
 		/* Error Generation Code Here */
 	}

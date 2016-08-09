@@ -36,4 +36,9 @@ class Template {
   
   }
 
+  function render_json($result){
+ 		// return json_encode($result);
+  	print_r(json_encode($result)) ;
+  }
+
 }
